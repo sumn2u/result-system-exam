@@ -29,6 +29,16 @@ export const router = new Router({
             meta: { authorize: [Role.Admin] } 
         },
         { 
+            path: '/users/:id', 
+            component: UserForm, 
+            meta: { authorize: [Role.Admin] },
+            props: (route) => {
+                return {
+                  ...route.params
+                };
+              }
+        },
+        { 
             path: '/login', 
             component: LoginPage 
         },

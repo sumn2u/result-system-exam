@@ -8,9 +8,7 @@
         <div class="card-body">
           <ValidationObserver ref="form" v-slot="{ passes }">
             <form
-              @submit.prevent="
-                passes(user.id ? updateUser : createUser)
-              "
+              @submit.prevent="passes(user.id ? updateUser : createUser)"
               class="form"
             >
               <div class="row">
@@ -21,12 +19,12 @@
                     name="User name"
                   >
                     <div class="form-group required user_name">
-                      <label for="user_name" class="required">Name </label>
+                      <label for="user_name" class="required">Username </label>
                       <input
                         class="form-control"
                         type="text"
                         name="user_name"
-                        v-model="user.forename"
+                        v-model="user.username"
                       />
                     </div>
                     <div
@@ -38,19 +36,17 @@
                     </div>
                   </ValidationProvider>
                   <ValidationProvider
-                    rules="required|email"
+                    rules="required"
                     v-slot="{ errors }"
-                    name="User email"
+                    name="Forename"
                   >
-                    <div class="form-group required user_email">
-                      <label for="user_email" class="required"
-                        >Email <abbr title="required">*</abbr></label
-                      >
+                    <div class="form-group required user_name">
+                      <label for="user_name" class="required"> Forename </label>
                       <input
                         class="form-control"
                         type="text"
-                        name="user_email"
-                        v-model="user.email"
+                        name="user_name"
+                        v-model="user.forname"
                       />
                     </div>
                     <div
@@ -61,16 +57,89 @@
                       <span>{{ error }}</span>
                     </div>
                   </ValidationProvider>
+
+                  <ValidationProvider
+                    rules="required"
+                    v-slot="{ errors }"
+                    name="Surname"
+                  >
+                    <div class="form-group required user_name">
+                      <label for="user_name" class="required"> Surname </label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="user_name"
+                        v-model="user.lastname"
+                      />
+                    </div>
+                    <div
+                      class="validation-text mb-3"
+                      v-for="(error, index) in errors"
+                      :key="`category-error-${index}`"
+                    >
+                      <span>{{ error }}</span>
+                    </div>
+                  </ValidationProvider>
+                  <ValidationProvider
+                    rules="required"
+                    v-slot="{ errors }"
+                    name="Password"
+                  >
+                    <div class="form-group required user_name">
+                      <label for="user_name" class="required">Password </label>
+                      <input
+                        class="form-control"
+                        type="password"
+                        name="user_name"
+                        v-model="user.password"
+                      />
+                    </div>
+                    <div
+                      class="validation-text mb-3"
+                      v-for="(error, index) in errors"
+                      :key="`category-error-${index}`"
+                    >
+                      <span>{{ error }}</span>
+                    </div>
+                  </ValidationProvider>
+
+                  <div class="form-group required user_role">
+                    <label for="user_role" class="required"
+                      >Role <abbr title="required">*</abbr></label
+                    >
+                    <br />
+                    <input
+                      type="radio"
+                      id="Admin"
+                      value="1"
+                      v-model="user.usertype"
+                    />
+                    <label for="Admin">Admin</label>
+                    <br />
+                    <input
+                      type="radio"
+                      id="Teacher"
+                      value="2"
+                      v-model="user.usertype"
+                    />
+                    <label for="Teacher">Teacher</label>
+                    <br />
+                    <input
+                      type="radio"
+                      id="Pupil"
+                      value="3"
+                      v-model="user.usertype"
+                    />
+                    <label for="Pupil">Pupil</label>
+                    <br />
+                  </div>
                 </div>
               </div>
 
               <button type="submit" name="commit" class="btn btn-primary">
                 {{ user.id ? "Update" : "Create" }}
               </button>
-              <router-link to="/users"
-                type="button"
-                class="btn btn-secondary"
-              >
+              <router-link to="/users" type="button" class="btn btn-secondary">
                 Cancel
               </router-link>
             </form>
@@ -83,6 +152,7 @@
 
 <script>
 import { required, email } from "vee-validate/dist/rules";
+import { authenticationService, userService } from '@/_services';
 import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
 extend("email", email);
 extend("required", {
@@ -103,82 +173,43 @@ export default {
   data() {
     return {
       user:{
-            forename: "",
-            surname: "",
+            forname: "",
+            lastname: "",
             username:"",
             password:"",
-            role: null
+            usertype: 1
           },
       alerts: []
     };
   },
   methods: {
     createUser() {
-    //   let that = this;
-    //   const { name , email } = this.user;
-    //   const body = {
-    //     user: {
-    //       name,
-    //       email
-    //     }
-    //   };
-    //   const api = new Api(`/admin/users.json`);
-    //   api
-    //     .post(body)
-    //     .then(() => {
-    //       this.$router.push({path: '/admin/users'});
-    //     })
-    //     .catch(error => {
-    //       if (error.response.status == 422) {
-    //         const { errors } = error.response.data;
-    //         errors.map(error => {
-    //           that.addAlert("danger", `${error.id} ${error.title}`);
-    //         });
-    //       } else {
-    //         that.addAlert("danger", "Server error");
-    //       }
-    //     });
+        const data = this.user;
+        userService.create(data).then(user => {
+            this.$router.push({path: '/users'});
+        })
+       
     },
     updateUser() {
-    //   let that = this;
-    //   const { name , email } = this.user;
-    //   const body = {
-    //     user: {
-    //       name,
-    //       email
-    //     }
-    //   };
-    //   const api = new Api(`/admin/users/`);
-    //   api
-    //     .update(this.user.id, body)
-    //     .then(() => {
-    //       this.$router.push({path: '/admin/users'});
-    //     })
-    //     .catch(error => {
-    //       if (error.response.status == 422) {
-    //         const { errors } = error.response.data;
-    //         errors.map(error => {
-    //           that.addAlert("danger", `${error.id} ${error.title}`);
-    //         });
-    //       } else {
-    //         that.addAlert("danger", "Server error");
-    //       }
-    //     });
+        const data = this.user;
+        userService.update(data).then(user => {
+            this.$router.push({path: '/users'});
+        })
     },
     addAlert: function(kind, message) {
-      this.alerts.push({ kind: kind, message: message });
+        this.alerts.push({ kind: kind, message: message });
     },
     init(){
-      fetch(`/admin/users/${this.id}.json`).then((response) => {
-        response.json().then((json) => {
-          this.user = json;
+        userService.getById(this.id).then(user => {
+            if(user){
+                this.user = user[0]
+            }
         });
-      });
     }
   },
   created(){
     if(this.id){
-    //   this.init();
+      this.init();
     }
   }
 };

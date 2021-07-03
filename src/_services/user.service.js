@@ -3,7 +3,10 @@ import { handleResponse, requestOptions } from '@/_helpers';
 
 export const userService = {
     getAll,
-    getById
+    getById,
+    deleteById,
+    create,
+    update
 };
 
 function getAll() {
@@ -14,4 +17,18 @@ function getAll() {
 function getById(id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions.get())
         .then(handleResponse);
+}
+
+function deleteById(id) {
+    return fetch(`${config.apiUrl}/users/${id}`, requestOptions.delete())
+      .then(handleResponse);
+}
+
+function create(body) {
+    return fetch(`${config.apiUrl}/users/`, requestOptions.post(body))
+      .then(handleResponse);
+}
+function update(body) {
+    return fetch(`${config.apiUrl}/users/`, requestOptions.put(body))
+      .then(handleResponse);
 }
