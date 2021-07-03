@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Result System</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/4.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body,
+        html,
+        .app {
+            height: 100%;
+        }
+        
+        .login-page {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .user-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40rem;
+        }
+        
+        .edit-user {
+            color: #00a9f2;
+            text-decoration: none;
+        }
+        
+        a {
+            cursor: pointer;
+        }
+        
+        .modal-mask {
+            position: fixed;
+            z-index: 9998;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: table;
+            transition: opacity 0.3s ease;
+            box-shadow: 0px 16px 48px rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+        }
+        
+        .modal-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        
+        .modal-container {
+            width: 30rem;
+            height: 22rem;
+            margin: 0px auto;
+            padding: 20px 30px;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            box-shadow: 0px 16px 48px rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+            font-family: Mulish;
+            text-align: center;
+        }
+        
+        .modal-header {
+            display: block !important;
+            border: none !important;
+            margin-top: 3rem !important;
+        }
+        
+        .modal-footer {
+            border: none !important;
+            text-align: center;
+            display: block !important;
+        }
+        
+        .modal-header h3 {
+            text-align: center;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
+            text-align: center;
+            color: #000000;
+        }
+        
+        .modal-default-button {
+            background: rgba(226, 21, 74, 0.9);
+            border-radius: 48px;
+            color: white;
+            height: 48px;
+            border: none;
+            width: 120px;
+        }
+        
+        .modal-default-button:focus {
+            outline: unset !important;
+        }
+        
+        .btn-cancel {
+            background: #ffffff;
+            color: rgba(0, 0, 0, 1);
+        }
+        
+        .btn-cancel:hover {
+            background: rgb(0, 0, 0, 0.05);
+        }
+        
+        .btn-delete:hover {
+            background: rgba(226, 21, 74, 1);
+        }
+        
+        .modal-enter {
+            opacity: 0;
+        }
+        
+        .modal-leave-active {
+            opacity: 0;
+        }
+        
+        .modal-enter .modal-container,
+        .modal-leave-active .modal-container {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>
