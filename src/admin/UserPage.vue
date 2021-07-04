@@ -21,6 +21,7 @@
                   <th>User Name</th>
                   <th>First Name</th>
                   <th>Last Name</th>
+                  <th>Role</th>
                   <th colspan="2"></th>
                 </thead>
                 <tbody v-if="users">
@@ -33,7 +34,7 @@
                     <td>{{ user.username }}</td>
                     <td>{{ user.forname }}</td>
                     <td>{{ user.lastname }}</td>
-                    <td>{{ getUserType(user.type) }}</td>
+                    <td>{{ getUserType(user.usertype) }}</td>
                     <td class="edit-user"><span @click="editUser(user.id)"> Edit </span> |  <span class="text-danger" @click="deleteUser(user.id)">  Delete</span></td>
                   </tr>
                 </tbody>
@@ -76,14 +77,14 @@ export default {
           this.$router.push({path: `/users/${id}`});
         },
         getUserType: function(type){
-        let role = 'Admin';
-        if(type === 2){
-          role = 'Teacher'
-        }else if(type === 3){
-          role = 'Pupil'
+          let role = 'Admin';
+          if(type === 2){
+            role = 'Teacher'
+          }else if(type === 3){
+            role = 'Pupil'
+          }
+          return role;
         }
-        return role;
-      }
     },
     created () {
         userService.getAll().then(users => this.users = users);

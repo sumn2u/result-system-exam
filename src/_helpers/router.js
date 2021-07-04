@@ -5,13 +5,18 @@ import { authenticationService } from '@/_services';
 import { Role } from '@/_helpers';
 import HomePage from '@/home/HomePage';
 import UserPage from '@/admin/UserPage';
+import ClassesPage from '@/admin/ClassesPage';
+import SubjectsPage from '@/admin/SubjectsPage';
+import UserLayout  from '@/admin/UserLayout';
 import UserForm from '@/admin/UserForm';
+import ClassForm from '@/admin/ClassForm';
+import SubjectForm from '@/admin/SubjectForm';
 import LoginPage from '@/login/LoginPage';
 
 Vue.use(Router);
 
 export const router = new Router({
-    mode: 'history',
+    mode: 'hash',
     routes: [
         { 
             path: '/', 
@@ -20,23 +25,52 @@ export const router = new Router({
         },
         { 
             path: '/users', 
-            component: UserPage, 
-            meta: { authorize: [Role.Admin] } 
-        },
-        { 
-            path: '/users/new', 
-            component: UserForm, 
-            meta: { authorize: [Role.Admin] } 
-        },
-        { 
-            path: '/users/:id', 
-            component: UserForm, 
+            component: UserLayout, 
             meta: { authorize: [Role.Admin] },
-            props: (route) => {
+            children: [
+              { path: '', component: UserPage },
+              { path: ':id', component: UserForm,
+              props: (route) => {
                 return {
                   ...route.params
                 };
-              }
+              }}
+              ,{ path: 'new', component: UserForm },
+
+            ]
+        },
+        { 
+            path: '/classes', 
+            component: UserLayout, 
+            meta: { authorize: [Role.Admin] },
+            children: [
+              { path: '', component: ClassesPage },
+              { path: ':id', component: ClassForm,
+              props: (route) => {
+                return {
+                  ...route.params
+                };
+              }}
+              ,{ path: 'new', component: ClassForm },
+
+            ]
+        },
+
+        { 
+            path: '/subjects', 
+            component: UserLayout, 
+            meta: { authorize: [Role.Admin] },
+            children: [
+              { path: '', component: SubjectsPage },
+              { path: ':id', component: SubjectForm,
+              props: (route) => {
+                return {
+                  ...route.params
+                };
+              }}
+              ,{ path: 'new', component: SubjectForm },
+
+            ]
         },
         { 
             path: '/login', 

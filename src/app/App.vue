@@ -7,6 +7,8 @@
                     <li class="active"> <router-link to="/" class="nav-item nav-link">Result Student</router-link></li>
                     <li class=""> <router-link to="/" class="nav-item nav-link">Home</router-link></li>
                     <li class=""> <router-link v-if="isAdmin" to="/users" class="nav-item nav-link">Users</router-link></li>
+                    <li class=""> <router-link v-if="isAdmin" to="/classes" class="nav-item nav-link">Classes</router-link></li>
+                    <li class=""> <router-link v-if="isAdmin" to="/subjects" class="nav-item nav-link">Subjects</router-link></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a @click="logout" class="nav-item nav-link">Logout</a></li>

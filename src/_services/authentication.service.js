@@ -13,9 +13,21 @@ export const authenticationService = {
 };
 
 function login(username, password) {
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions.post({ username, password }))
+    return fetch(`${config.apiUrl}/login/`, requestOptions.post({ username, password }))
         .then(handleResponse)
         .then(user => {
+          if(user.usertype == 1){
+            user.role = 'Admin'
+          }else if(user.usertype == 2){
+            user.role = 'Teacher'
+          }else {
+            user.role = 'Pupil'
+          }
+          console.log(user)
+          user.token = `fake-jwt-token.${user.role}`;
+          // if
+          //  role: user.role,
+          //               token: `fake-jwt-token.${user.role}`
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
             currentUserSubject.next(user);
